@@ -9,7 +9,7 @@ var templateLoad = function (property) {
             '<div>'+property.locales.textDrop+'</div>' +
             '<div>'+property.locales.textOr+'</div>' +
             '<div class="text-error"></div>' +
-            '<div class="fm-drop-zone-message">' +
+            '<div class="drop-zone-message">' +
             '<div><input class="file-load" type="file"></div></div>' +
             '</div>' +
         '</div>';

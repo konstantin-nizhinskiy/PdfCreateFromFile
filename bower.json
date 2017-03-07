@@ -1,7 +1,7 @@
 {
   "name": "pdf-create-from-file",
   "description": "Pdf create from file in JavaScript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "",
   "authors": [
     "Konstantin Nizhinskiy"

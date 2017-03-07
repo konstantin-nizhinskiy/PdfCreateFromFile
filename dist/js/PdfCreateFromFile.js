@@ -1,8 +1,8 @@
 /*
 name: pdf-create-from-file
-version: 1.0.0
+version: 1.0.1
 author: Konstantin Nizhinskiy
-date: 2017-03-07 11:03:57 
+date: 2017-03-07 13:03:40 
 
 */
 (function (root, factory) {
@@ -505,7 +505,7 @@ var templateLoad = function (property) {
             '<div>'+property.locales.textDrop+'</div>' +
             '<div>'+property.locales.textOr+'</div>' +
             '<div class="text-error"></div>' +
-            '<div class="fm-drop-zone-message">' +
+            '<div class="drop-zone-message">' +
             '<div><input class="file-load" type="file"></div></div>' +
             '</div>' +
         '</div>';
