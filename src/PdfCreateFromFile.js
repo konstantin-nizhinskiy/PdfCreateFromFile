@@ -1,18 +1,21 @@
 (function (root, factory) {
     if (typeof define === "function" && define.amd) {
         // the AMD loader.
-        define(['pdfMake'], factory);
+        define(['pdfMake',"JSZip"], factory);
     } else if (typeof module === "object" && module.exports) {
         // the CommonJS loader.
-        module.exports = factory(require('pdfMake'));
+        module.exports = factory(require('pdfMake'),require('JSZip'));
     } else {
         if (!root.pdfMake) {
-            throw 'not fount module pdfMake https://bpampuch.github.io/pdfmake'
+            throw 'not fount module pdfMake https://github.com/bpampuch/pdfmake'
         }
-        root.PdfCreateFromFile = factory(root.pdfMake);
+        if (!root.JSZip) {
+            throw 'not fount module JSZip https://github.com/Stuk/jszip'
+        }
+        root.PdfCreateFromFile = factory(root.pdfMake,root.JSZip);
 
     }
-}(this, function (pdfmake) {
+}(this, function (pdfmake,JSZip) {
     /**
      *
      * @constructor

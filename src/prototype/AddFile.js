@@ -1,12 +1,13 @@
 PdfCreateFromFile.prototype.addFile=function(file,property){
     var typeName, reader = new FileReader(),
         _this=this,
-        locales=getLocale.call(this,this._locale);
-    if(file.type.indexOf('image')>-1){
+        locales=getLocale.call(this,this._locale),
+        _typeFile=file.name.split('.').pop();
+    if(file.type.indexOf('image')>-1||_supportTypeImg.indexOf(_typeFile.toUpperCase())>-1){
         typeName='image';
-    }else if(file.type.indexOf('html')>-1){
+    }else if(file.type.indexOf('html')>-1||_supportTypeHtml.indexOf(_typeFile.toUpperCase())>-1){
         typeName='html';
-    }else if(file.type.indexOf('text')>-1||file.type.indexOf('application')>-1){
+    }else if(file.type.indexOf('text')>-1||_supportTypeText.indexOf(_typeFile.toUpperCase())>-1){
         typeName='text';
     }else if(file.type.indexOf('pdf')>-1){
         typeName='pdf';
@@ -52,6 +53,7 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
         return false;
     }
     if(typeName!='zip') {
+
         reader.onload = function (e) {
             var humanFileSize = function (size) {
                 var i = Math.floor(Math.log(size) / Math.log(1024));
