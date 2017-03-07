@@ -1,13 +1,14 @@
 PdfCreateFromFile
 =================
 
-The module allows you to download multiple files and merge them into PDF.
+Module allows you to download multiple files and merge them into PDF.
 Support type file `BMP`, `JPEG`, `JPG`, `JPE`, `JP2`, `PNG`, `TXT`, `TEX`, `HTML`, `LOG`, `JS`
 
- * [download](#download)
+ * [Download](#download)
+ * [Dependencies](#dependencies)
  * [Loader supports](#loader-supports)
- * [dependencies](#dependencies)
- * [config](#config)
+ 
+ * [Config](#config)
  * [methods](#methods)
  * [example](#example)
  
