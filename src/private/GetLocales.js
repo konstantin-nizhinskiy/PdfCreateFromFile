@@ -1,9 +1,15 @@
 var getLocale=function(locale){
-    var locales;
+    var locales={};
     if(params['locales'][locale]){
-        locales = params['locales'][locale];
+        for(var key in params['locales'][locale]){
+            locales[key]=params['locales'][locale][key];
+        }
+        //locales = params['locales'][locale];
     }else{
-        locales = params['localesDefault'];
+        for(var key in params['localesDefault']){
+            locales[key]=params['localesDefault'][key];
+        }
+        //locales = params['localesDefault'];
     }
     if(this._locales){
         for(var key in this._locales){
