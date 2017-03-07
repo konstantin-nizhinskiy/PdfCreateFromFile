@@ -43,19 +43,23 @@ Support type file `BMP`, `JPEG`, `JPG`, `JPE`, `JP2`, `PNG`, `TXT`, `TEX`, `HTML
 ### Options
 
 #### wrapper
-Name: You can set main wrapper element
 Type: `HTMLElement`  
 Default: `document.body`
 
+You can set main wrapper element
+
 #### locale
-Name: Set locale translation
 Type: `String`
 Default: `en`
 
+Set locale translation
+
 #### typeOpen 
-Name: Set type convert file pdf
 Type: `String`
 Default: `download`
+
+Set type convert file pdf
+
 SupportValue:
 
  * download - Create PDF and download to client (you can set documentName)
@@ -66,17 +70,21 @@ SupportValue:
  * getDataUrl - Create PDF and get DataUrl (This options async you need set function callback)
 
 #### documentName
-Name: Document name download
-TYpe: `String`
+Type: `String`
 Default: `Document`
 
+Document name download
+
 #### callback
-Name: Function callback getContent file getBase64,getBlob,getDataUrl in arguments
 Type: `Function`
 
+Function callback getContent file getBase64,getBlob,getDataUrl in arguments
+
 #### locales
-Name: You can set custom text in modal load file
 Type: `Object`
+
+You can set custom text in modal load file
+
 SupportValue:
 
  * errorArrayLoadFile - "Please delete all not support file"
@@ -92,8 +100,9 @@ SupportValue:
  * textOr - "or"
 
 #### storageId
-Name: You can set storage Id in session
 Type: `String`
+
+You can set storage Id in session
 
 ## Methods
  Method               | Arguments                  |  info           
