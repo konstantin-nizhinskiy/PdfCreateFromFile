@@ -1,0 +1,26 @@
+{
+  "name": "nks-PdfCreateFromFile",
+  "description":"PdfCreateFromFile",
+  "license": "MIT",
+  "version": "1.2.1",
+  "author": "Konstantin Nizhinskiy",
+  "files": [
+    "tasks",
+    "History.md",
+    "LICENSE-MIT"
+  ],
+  "dependencies": {
+    "chalk": "^1.1.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-banner": "^0.5.0",
+    "grunt-contrib-concat": "~0.4",
+    "grunt-contrib-nodeunit": "~0.3",
+    "grunt-contrib-uglify": "~0.4",
+    "grunt-tasks": "^1.0.0",
+    "time-grunt": "~0.3",
+    "grunt-contrib-sass": "^0.9.2"
+
+  }
+}

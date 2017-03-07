@@ -1,0 +1,37 @@
+{
+  "name": "pdf-create-from-file",
+  "description": "Pdf create from file in JavaScript",
+  "version": "1.0.0",
+  "main": "",
+  "authors": [
+    "Konstantin Nizhinskiy"
+  ],
+  "keywords": [
+    "pdf",
+    "create-pdf",
+    "image-pdf",
+    "file-pdf",
+    "JavaScript-pdf",
+    "js-pdf",
+    "nks-pdf"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/konstantin-nizhinskiy/PdfCreateFromFile",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src",
+    "tasks",
+    "grunt",
+    "bower_components",
+    "test",
+    "tasks",
+    "package.json",
+    "Gruntfile.js",
+    "tests"
+  ],
+  "dependencies": {
+    "pdfmake": "^0.1.26",
+    "jszip": "^3.1.3"
+  }
+}

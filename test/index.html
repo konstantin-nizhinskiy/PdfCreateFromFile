@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../dist/css/PdfCreateFromFile.min.css">
+
+    <script src='../bower_components/pdfmake/build/pdfmake.min.js'></script>
+    <script src='../bower_components/pdfmake/build/vfs_fonts.js'></script>
+    <script src="../dist/js/PdfCreateFromFile.js"></script>
+    <script src="../dist/js/locales/PdfCreateFromFile.ru.min.js"></script>
+    <script src="../dist/js/locales/PdfCreateFromFile.ua.min.js"></script>
+    <script src="../dist/js/locales/PdfCreateFromFile.en.min.js"></script>
+    <script src="../bower_components/jszip/dist/jszip.min.js"></script>
+<!--    <script src='jQuery.js'></script>-->
+</head>
+<body>
+<h1>Demo generation PDF</h1>
+<button onclick="pdfCreateFromFile1.openModal('open');">Open storage 1</button>
+<button onclick="pdfCreateFromFile2.openModal('open');">Open storage 1(EN)</button>
+<button onclick="pdfCreateFromFile3.openModal('open');">Open storage 1(RU)</button>
+<button onclick="pdfCreateFromFile4.openModal('open');">Open storage 1(UA)</button>
+<button onclick="pdfCreateFromFile1.openModal('print');">Print</button>
+<button onclick="pdfCreateFromFile1.openModal('download');">Download</button>
+<button onclick="pdfCreateFromFile1.openModal('getBase64',getData);">GetBase64</button>
+<button onclick="pdfCreateFromFile1.openModal('getBlob',getData);">GetBlob</button>
+<button onclick="pdfCreateFromFile1.openModal('getDataUrl',getData);">GetDataUrl</button>
+<script>
+    var pdfCreateFromFile1 = new PdfCreateFromFile({
+        storageId:1
+    });
+    var pdfCreateFromFile2 = new PdfCreateFromFile({
+        storageId:1,
+        locale:'en'
+    });
+    var pdfCreateFromFile3 = new PdfCreateFromFile({
+        storageId:1,
+        locale:'ru',
+        locales:{
+            title:'My title'
+        }
+    });
+    var pdfCreateFromFile4 = new PdfCreateFromFile({
+        storageId:1,
+        locale:'ua'
+    });
+    function getData(data){
+        document.getElementById('data').innerText=data;
+    }
+</script>
+<pre>
+    var pdfCreateFromFile1 = new PdfCreateFromFile({
+        storageId:1
+    });
+    var pdfCreateFromFile2 = new PdfCreateFromFile({
+        storageId:1,
+        locale:'en'
+    });
+    var pdfCreateFromFile3 = new PdfCreateFromFile({
+        storageId:1,
+        locale:'ru',
+        locales:{
+            title:'My title'
+        }
+    });
+    var pdfCreateFromFile4 = new PdfCreateFromFile({
+        storageId:1,
+        locale:'ua'
+    });
+    function getData(data){
+        document.getElementById('data').innerText=data;
+    }
+
+
+    pdfCreateFromFile1.openModal('open');
+    pdfCreateFromFile2.openModal('open');
+
+    pdfCreateFromFile1.openModal('print');
+    pdfCreateFromFile1.openModal('download');
+    pdfCreateFromFile1.openModal('getBase64',getData);
+    pdfCreateFromFile1.openModal('getBlob',getData);
+    pdfCreateFromFile1.openModal('getDataUrl',getData);
+
+</pre>
+<div id="data"></div>
+</body>
+</html>

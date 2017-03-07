@@ -1,0 +1,73 @@
+@import "Const";
+.btn-default {
+    background-color: $btn-default-background;
+    border:  1px solid $btn-default-border;
+    color: $btn-default-color;
+    &:hover{
+        background-color: darken($btn-default-background,5);
+        border:  1px solid darken($btn-default-border,5);
+        color: darken($btn-default-color,5);
+    }
+    &:active{
+        background-color: darken($btn-default-background,10);
+        border:  1px solid darken($btn-default-border,10);
+        color: darken($btn-default-color,10);
+    }
+}
+.btn-success {
+    background-color: $btn-success-background;
+    border:  1px solid $btn-success-border;
+    color: $btn-success-color;
+    &:hover{
+        background-color: darken($btn-success-background,5);
+        border:  1px solid darken($btn-success-border,5);
+        color: darken($btn-success-color,5);
+    }
+    &:active{
+        background-color: darken($btn-success-background,10);
+        border:  1px solid darken($btn-success-border,10);
+        color: darken($btn-success-color,10);
+    }
+}
+.btn-primary {
+    background-color: $btn-primary-background;
+    border:  1px solid $btn-primary-border;
+    color: $btn-primary-color;
+    &:hover{
+        background-color: darken($btn-primary-background,5);
+        border:  1px solid darken($btn-primary-border,5);
+        color: darken($btn-primary-color,5);
+    }
+    &:active{
+        background-color: darken($btn-primary-background,10);
+        border:  1px solid darken($btn-primary-border,10);
+        color: darken($btn-primary-color,10);
+    }
+}
+
+.btn {
+    -moz-user-select: none;
+    background-image: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.btn-close,.btn-add{
+    float: left;
+}
+.btn-save{
+    float: right;
+}
+.btn-delete{
+    margin-left: 120px;
+    margin-top: 15px;
+}
