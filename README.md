@@ -48,13 +48,13 @@ Default: `document.body`
 You can set main wrapper element
 
 #### locale
-Type: `String`
+Type: `String`   
 Default: `en`
 
 Set locale translation
 
 #### typeOpen 
-Type: `String`
+Type: `String`    
 Default: `download`
 
 Set type convert file pdf
@@ -69,7 +69,7 @@ SupportValue:
  * getDataUrl - Create PDF and get DataUrl (This options async you need set function callback)
 
 #### documentName
-Type: `String`
+Type: `String`    
 Default: `Document`
 
 Document name download
