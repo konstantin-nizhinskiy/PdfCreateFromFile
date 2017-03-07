@@ -7,7 +7,6 @@ Support type file `BMP`, `JPEG`, `JPG`, `JPE`, `JP2`, `PNG`, `TXT`, `TEX`, `HTML
  * [Download](#download)
  * [Dependencies](#dependencies)
  * [Loader supports](#loader-supports)
- 
  * [Config](#config)
  * [methods](#methods)
  * [example](#example)
