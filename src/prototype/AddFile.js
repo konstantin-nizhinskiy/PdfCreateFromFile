@@ -3,11 +3,24 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
         _this=this,
         locales=getLocale.call(this,this._locale),
         _typeFile=file.name.split('.').pop();
+    if(this._listTypeFile.length>0){
+        var _isFileSupports=false;
+        this._listTypeFile.forEach(function(row){
+            if(_typeFile.toUpperCase()===row.toUpperCase()) {
+                _isFileSupports=true;
+
+            }
+        });
+        if(_isFileSupports==false){
+            property.error(locales['errorTypeFileNotSupport']);
+            return false;
+        }
+    }
     if(file.type.indexOf('image')>-1||_supportTypeImg.indexOf(_typeFile.toUpperCase())>-1){
         typeName='image';
     }else if(file.type.indexOf('html')>-1||_supportTypeHtml.indexOf(_typeFile.toUpperCase())>-1){
         typeName='html';
-    }else if(file.type.indexOf('text')>-1||_supportTypeText.indexOf(_typeFile.toUpperCase())>-1){
+    }else if(file.type.indexOf('text')>-1||file.type.indexOf('xml')>-1||file.type.indexOf('json')>-1||_supportTypeText.indexOf(_typeFile.toUpperCase())>-1){
         typeName='text';
     }else if(file.type.indexOf('pdf')>-1){
         typeName='pdf';
@@ -53,12 +66,18 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
         return false;
     }
     if(typeName!='zip') {
-
+        var _cp1251=false;
         reader.onload = function (e) {
+            if(_cp1251==false && e.target.result.indexOf('encoding="windows-1251"')>-1){
+                _cp1251=true;
+                reader.readAsText(file, "windows-1251");
+                return false;
+            }
             var humanFileSize = function (size) {
                 var i = Math.floor(Math.log(size) / Math.log(1024));
                 return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
             };
+
             _files[_this._storageId].push({
                 lastModified: file.lastModified,
                 name: file.name,
@@ -73,6 +92,7 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
         };
         if(_supportTypeText.indexOf(typeName.toUpperCase())>-1 ||_supportTypeHtml.indexOf(typeName.toUpperCase())>-1){
             reader.readAsText(file, "UTF-8");
+
         } else {
             reader.readAsDataURL(file);
         }

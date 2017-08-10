@@ -2,7 +2,7 @@ PdfCreateFromFile
 =================
 
 Module allows you to download multiple files and merge them into PDF.
-Support type file `BMP`, `JPEG`, `JPG`, `JPE`, `JP2`, `PNG`, `TXT`, `TEX`, `HTML`, `LOG`, `JS`
+Support type file `BMP`, `JPEG`, `JPG`, `JPE`, `JP2`, `PNG`, `TXT`, `TEX`, `HTML`, `LOG`, `JS` `XML`, `JSON`, `ZIP`
 
  * [Download](#download)
  * [Dependencies](#dependencies)
@@ -53,6 +53,18 @@ Default: `en`
 
 Set locale translation
 
+#### maxCountFile
+Type: `number`   
+Default: `0`
+
+Max count file you can add if == 0 We do not check count file
+
+#### listTypeFile
+Type: `array`   
+Default: `[]`
+
+List type file you can add if list is empty we check default file type
+
 #### typeOpen 
 Type: `String`    
 Default: `download`
@@ -67,6 +79,7 @@ SupportValue:
  * getBase64 - Create PDF and get base64 (This options async you need set function callback)
  * getBlob - Create PDF and get Blob (This options async you need set function callback)
  * getDataUrl - Create PDF and get DataUrl (This options async you need set function callback)
+ * onlyContentFile - Don`t create PDF and send in callback all file add (This options async you need set function callback)
 
 #### documentName
 Type: `String`    
@@ -139,6 +152,10 @@ You can set storage Id in session
 <button onclick="pdfCreateFromFile1.openModal('getBase64',getData);">GetBase64</button>
 <button onclick="pdfCreateFromFile1.openModal('getBlob',getData);">GetBlob</button>
 <button onclick="pdfCreateFromFile1.openModal('getDataUrl',getData);">GetDataUrl</button>
+<br>
+<button onclick="pdfCreateFromFile5.openModal('open');">Open only XML and JSON</button>
+<button onclick="pdfCreateFromFile6.openModal('open');">Open only XML and JSON and 1 file</button>
+<button onclick="pdfCreateFromFile6.openModal('onlyContentFile',console.log);">onlyContentFile console.log</button>
 <script>
     var pdfCreateFromFile1 = new PdfCreateFromFile({
         storageId:1
@@ -158,6 +175,13 @@ You can set storage Id in session
         storageId:1,
         locale:'ua'
     });
+    var pdfCreateFromFile5 = new PdfCreateFromFile({
+            listTypeFile:["xml","json"]
+        });
+        var pdfCreateFromFile6 = new PdfCreateFromFile({
+            listTypeFile:["xml","json"],
+            maxCountFile:1
+        });
     function getData(data){
         document.getElementById('data').innerText=data;
     }

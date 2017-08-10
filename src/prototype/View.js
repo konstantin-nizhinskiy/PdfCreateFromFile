@@ -14,7 +14,37 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
         btnClose = _template.getElementsByClassName('btn-close')[0],
         btnAdd = _template.getElementsByClassName('btn-add')[0],
         errorFooter = _template.getElementsByClassName('error-footer')[0],
-        btnSave = _template.getElementsByClassName('btn-save')[0];
+        btnSave = _template.getElementsByClassName('btn-save')[0],
+        changeFile=function(){
+            if(_files[_this._storageId].length==0){
+                btnAdd.style.display='none';
+                btnSave.style.display='none';
+
+                body.appendChild(FileLoadView.call(_this,{
+                    locales:_locales,
+                    success: function () {
+                        btnAdd.style.display='block';
+                        btnSave.style.display='block';
+                        body.innerHTML = "";
+                        body.appendChild(FileListView({
+                            storageId:_this._storageId,
+                            locales:_locales,
+                            changeFile:changeFile
+                        }));
+                        changeFile();
+                    }
+                }));
+            }else{
+                if(_this._maxCountFile>0){
+                    if(_this._maxCountFile<=_files[_this._storageId].length){
+                        btnAdd.style.display='none';
+                    }else{
+                        btnAdd.style.display='block';
+                    }
+                }
+            }
+
+        };
 
 
     btnClose.onclick=function(atr){
@@ -26,6 +56,10 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
         if(_this.isValid()===false){
             errorFooter.innerText=_locales['errorArrayLoadFile'];
             return false;
+        }
+        /** Off generation pdf get only content file in function callback */
+        if(typeOpen=='onlyContentFile'){
+            callback(_files[_this._storageId]);
         }
         if(_files[_this._storageId].length==1 && _files[_this._storageId][0].typeName.toUpperCase()=='PDF'){
             switch (typeOpen){
@@ -111,8 +145,10 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
                 body.innerHTML = "";
                 body.appendChild(FileListView({
                     storageId:_this._storageId,
-                    locales:_locales
+                    locales:_locales,
+                    changeFile:changeFile
                 }));
+                changeFile()
             }
         }));
         body.scrollTop = body.scrollHeight;
@@ -120,7 +156,8 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
     if(_files[_this._storageId].length){
         body.appendChild(FileListView({
             storageId:_this._storageId,
-            locales:_locales
+            locales:_locales,
+            changeFile:changeFile
         }));
     }else{
         btnAdd.style.display='none';
@@ -133,8 +170,10 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
                 body.innerHTML = "";
                 body.appendChild(FileListView({
                     storageId:_this._storageId,
-                    locales:_locales
+                    locales:_locales,
+                    changeFile:changeFile
                 }));
+                changeFile();
             }
         }));
 

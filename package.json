@@ -2,7 +2,7 @@
   "name": "nks-PdfCreateFromFile",
   "description":"PdfCreateFromFile",
   "license": "MIT",
-  "version": "1.2.1",
+  "version": "1.1.0",
   "author": "Konstantin Nizhinskiy",
   "files": [
     "tasks",

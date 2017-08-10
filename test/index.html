@@ -27,6 +27,10 @@
 <button onclick="pdfCreateFromFile1.openModal('getBase64',getData);">GetBase64</button>
 <button onclick="pdfCreateFromFile1.openModal('getBlob',getData);">GetBlob</button>
 <button onclick="pdfCreateFromFile1.openModal('getDataUrl',getData);">GetDataUrl</button>
+<br>
+<button onclick="pdfCreateFromFile5.openModal('open');">Open only XML and JSON</button>
+<button onclick="pdfCreateFromFile6.openModal('open');">Open only XML and JSON and 1 file</button>
+<button onclick="pdfCreateFromFile6.openModal('onlyContentFile',console.log);">onlyContentFile console.log</button>
 <script>
     var pdfCreateFromFile1 = new PdfCreateFromFile({
         storageId:1
@@ -45,6 +49,13 @@
     var pdfCreateFromFile4 = new PdfCreateFromFile({
         storageId:1,
         locale:'ua'
+    });
+    var pdfCreateFromFile5 = new PdfCreateFromFile({
+        listTypeFile:["xml","json"]
+    });
+    var pdfCreateFromFile6 = new PdfCreateFromFile({
+        listTypeFile:["xml","json"],
+        maxCountFile:1
     });
     function getData(data){
         document.getElementById('data').innerText=data;

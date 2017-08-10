@@ -21,6 +21,8 @@
      * @constructor
      * @param property {object|string}
      * @param property.wrapper {object}
+     * @param property.maxCountFile {number} - Max count file you can add [0] if == 0 We do not check count file
+     * @param property.listTypeFile {array} - List type file you can add if list is empty we check default file type
      * @param property.storageId {string}
      * @param property.locale {string}
      * @param property.locales {object}
@@ -38,6 +40,8 @@
 
             this._wrapper = property.wrapper || document.body;
             this._locale = property.locale || 'en';
+            this._maxCountFile = property.maxCountFile || 0;
+            this._listTypeFile = property.listTypeFile || [];
             this._typeOpen = property.typeOpen || 'download';
             this._documentName = property.documentName || 'Document';
             this._callback = property.callback;
@@ -58,9 +62,9 @@
                 throw 'Set function callback in param callback'
             }
         },
-        _supportTypeOpen = ['download', 'open', 'print', 'getBase64', 'getBlob', 'getDataUrl'],
+        _supportTypeOpen = ['download', 'open', 'print', 'getBase64', 'getBlob', 'getDataUrl','onlyContentFile'],
         _supportTypeImg = ['BMP', 'JPEG', 'JPG', 'JPE', 'JP2', 'PNG', "IMAGE"],
-        _supportTypeText = ['TXT','LOG','JS', 'TEX', 'TEXT'],
+        _supportTypeText = ['TXT','LOG','JS', 'TEX', 'TEXT',"XML","JSON"],
         _supportTypeHtml = ['HTML'],
         _supportTypeOpenCallback = ['getBase64', 'getBlob', 'getDataUrl'],
         _files = [],

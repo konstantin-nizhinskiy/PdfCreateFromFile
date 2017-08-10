@@ -1,8 +1,8 @@
 /*
 name: pdf-create-from-file
-version: 1.0.2
+version: 1.1.0
 author: Konstantin Nizhinskiy
-date: 2017-03-07 15:03:39 
+date: 2017-08-10 15:08:13 
 
 */
 (function (root, factory) {
@@ -28,6 +28,8 @@ date: 2017-03-07 15:03:39
      * @constructor
      * @param property {object|string}
      * @param property.wrapper {object}
+     * @param property.maxCountFile {number} - Max count file you can add [0] if == 0 We do not check count file
+     * @param property.listTypeFile {array} - List type file you can add if list is empty we check default file type
      * @param property.storageId {string}
      * @param property.locale {string}
      * @param property.locales {object}
@@ -45,6 +47,8 @@ date: 2017-03-07 15:03:39
 
             this._wrapper = property.wrapper || document.body;
             this._locale = property.locale || 'en';
+            this._maxCountFile = property.maxCountFile || 0;
+            this._listTypeFile = property.listTypeFile || [];
             this._typeOpen = property.typeOpen || 'download';
             this._documentName = property.documentName || 'Document';
             this._callback = property.callback;
@@ -65,9 +69,9 @@ date: 2017-03-07 15:03:39
                 throw 'Set function callback in param callback'
             }
         },
-        _supportTypeOpen = ['download', 'open', 'print', 'getBase64', 'getBlob', 'getDataUrl'],
+        _supportTypeOpen = ['download', 'open', 'print', 'getBase64', 'getBlob', 'getDataUrl','onlyContentFile'],
         _supportTypeImg = ['BMP', 'JPEG', 'JPG', 'JPE', 'JP2', 'PNG', "IMAGE"],
-        _supportTypeText = ['TXT','LOG','JS', 'TEX', 'TEXT'],
+        _supportTypeText = ['TXT','LOG','JS', 'TEX', 'TEXT',"XML","JSON"],
         _supportTypeHtml = ['HTML'],
         _supportTypeOpenCallback = ['getBase64', 'getBlob', 'getDataUrl'],
         _files = [],
@@ -138,6 +142,7 @@ var FileListView = function (property) {
                 });
                 isSupports(property.storageId);
                 wrapper.appendChild(render());
+                property.changeFile();
             }
         }
         return _templateList;
@@ -578,11 +583,24 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
         _this=this,
         locales=getLocale.call(this,this._locale),
         _typeFile=file.name.split('.').pop();
+    if(this._listTypeFile.length>0){
+        var _isFileSupports=false;
+        this._listTypeFile.forEach(function(row){
+            if(_typeFile.toUpperCase()===row.toUpperCase()) {
+                _isFileSupports=true;
+
+            }
+        });
+        if(_isFileSupports==false){
+            property.error(locales['errorTypeFileNotSupport']);
+            return false;
+        }
+    }
     if(file.type.indexOf('image')>-1||_supportTypeImg.indexOf(_typeFile.toUpperCase())>-1){
         typeName='image';
     }else if(file.type.indexOf('html')>-1||_supportTypeHtml.indexOf(_typeFile.toUpperCase())>-1){
         typeName='html';
-    }else if(file.type.indexOf('text')>-1||_supportTypeText.indexOf(_typeFile.toUpperCase())>-1){
+    }else if(file.type.indexOf('text')>-1||file.type.indexOf('xml')>-1||file.type.indexOf('json')>-1||_supportTypeText.indexOf(_typeFile.toUpperCase())>-1){
         typeName='text';
     }else if(file.type.indexOf('pdf')>-1){
         typeName='pdf';
@@ -628,12 +646,18 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
         return false;
     }
     if(typeName!='zip') {
-
+        var _cp1251=false;
         reader.onload = function (e) {
+            if(_cp1251==false && e.target.result.indexOf('encoding="windows-1251"')>-1){
+                _cp1251=true;
+                reader.readAsText(file, "windows-1251");
+                return false;
+            }
             var humanFileSize = function (size) {
                 var i = Math.floor(Math.log(size) / Math.log(1024));
                 return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
             };
+
             _files[_this._storageId].push({
                 lastModified: file.lastModified,
                 name: file.name,
@@ -648,6 +672,7 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
         };
         if(_supportTypeText.indexOf(typeName.toUpperCase())>-1 ||_supportTypeHtml.indexOf(typeName.toUpperCase())>-1){
             reader.readAsText(file, "UTF-8");
+
         } else {
             reader.readAsDataURL(file);
         }
@@ -793,7 +818,37 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
         btnClose = _template.getElementsByClassName('btn-close')[0],
         btnAdd = _template.getElementsByClassName('btn-add')[0],
         errorFooter = _template.getElementsByClassName('error-footer')[0],
-        btnSave = _template.getElementsByClassName('btn-save')[0];
+        btnSave = _template.getElementsByClassName('btn-save')[0],
+        changeFile=function(){
+            if(_files[_this._storageId].length==0){
+                btnAdd.style.display='none';
+                btnSave.style.display='none';
+
+                body.appendChild(FileLoadView.call(_this,{
+                    locales:_locales,
+                    success: function () {
+                        btnAdd.style.display='block';
+                        btnSave.style.display='block';
+                        body.innerHTML = "";
+                        body.appendChild(FileListView({
+                            storageId:_this._storageId,
+                            locales:_locales,
+                            changeFile:changeFile
+                        }));
+                        changeFile();
+                    }
+                }));
+            }else{
+                if(_this._maxCountFile>0){
+                    if(_this._maxCountFile<=_files[_this._storageId].length){
+                        btnAdd.style.display='none';
+                    }else{
+                        btnAdd.style.display='block';
+                    }
+                }
+            }
+
+        };
 
 
     btnClose.onclick=function(atr){
@@ -805,6 +860,10 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
         if(_this.isValid()===false){
             errorFooter.innerText=_locales['errorArrayLoadFile'];
             return false;
+        }
+        /** Off generation pdf get only content file in function callback */
+        if(typeOpen=='onlyContentFile'){
+            callback(_files[_this._storageId]);
         }
         if(_files[_this._storageId].length==1 && _files[_this._storageId][0].typeName.toUpperCase()=='PDF'){
             switch (typeOpen){
@@ -890,8 +949,10 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
                 body.innerHTML = "";
                 body.appendChild(FileListView({
                     storageId:_this._storageId,
-                    locales:_locales
+                    locales:_locales,
+                    changeFile:changeFile
                 }));
+                changeFile()
             }
         }));
         body.scrollTop = body.scrollHeight;
@@ -899,7 +960,8 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
     if(_files[_this._storageId].length){
         body.appendChild(FileListView({
             storageId:_this._storageId,
-            locales:_locales
+            locales:_locales,
+            changeFile:changeFile
         }));
     }else{
         btnAdd.style.display='none';
@@ -912,8 +974,10 @@ PdfCreateFromFile.prototype.view=function(typeOpen,callback){
                 body.innerHTML = "";
                 body.appendChild(FileListView({
                     storageId:_this._storageId,
-                    locales:_locales
+                    locales:_locales,
+                    changeFile:changeFile
                 }));
+                changeFile();
             }
         }));
 

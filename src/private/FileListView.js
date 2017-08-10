@@ -31,6 +31,7 @@ var FileListView = function (property) {
                 });
                 isSupports(property.storageId);
                 wrapper.appendChild(render());
+                property.changeFile();
             }
         }
         return _templateList;
