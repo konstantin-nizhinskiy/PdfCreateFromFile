@@ -1,8 +1,8 @@
 /*
 name: pdf-create-from-file
-version: 1.1.0
+version: 1.1.1
 author: Konstantin Nizhinskiy
-date: 2017-08-18 13:08:15 
+date: 2017-08-18 13:08:01 
 
 */
 (function (root, factory) {
