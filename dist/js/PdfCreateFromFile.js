@@ -2,7 +2,7 @@
 name: pdf-create-from-file
 version: 1.1.0
 author: Konstantin Nizhinskiy
-date: 2017-08-10 15:08:13 
+date: 2017-08-18 13:08:15 
 
 */
 (function (root, factory) {
@@ -551,7 +551,7 @@ var templateWait = function (property) {
 
 var templateWrapper=function(property){
     var wrapper=document.createElement('div'),
-        height = window.innerHeight;
+        height = 540;//window.innerHeight;
     wrapper.innerHTML=
         '<div class="wrapper-pdf-create">'+
             '<div class="modal-dialog" role="document">'+

@@ -4,7 +4,7 @@
 
 var templateWrapper=function(property){
     var wrapper=document.createElement('div'),
-        height = window.innerHeight;
+        height = 540;//window.innerHeight;
     wrapper.innerHTML=
         '<div class="wrapper-pdf-create">'+
             '<div class="modal-dialog" role="document">'+
