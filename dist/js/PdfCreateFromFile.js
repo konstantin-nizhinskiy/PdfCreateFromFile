@@ -8,10 +8,10 @@ date: 2017-08-18 13:08:01
 (function (root, factory) {
     if (typeof define === "function" && define.amd) {
         // the AMD loader.
-        define(['pdfMake',"JSZip"], factory);
+        define(['pdfMake',"jszip"], factory);
     } else if (typeof module === "object" && module.exports) {
         // the CommonJS loader.
-        module.exports = factory(require('pdfMake'),require('JSZip'));
+        module.exports = factory(require('pdfMake'),require('jszip'));
     } else {
         if (!root.pdfMake) {
             throw 'not fount module pdfMake https://github.com/bpampuch/pdfmake'
