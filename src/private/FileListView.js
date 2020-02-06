@@ -1,4 +1,4 @@
-var FileListView = function (property) {
+var FileListView = function (property,main) {
     var _id = +new Date(),
         wrapper = document.createElement('div'),
         render;
@@ -27,9 +27,9 @@ var FileListView = function (property) {
                 }
 
                 _files[property.storageId].forEach(function(row){
-                    row.isSupport=isSupport(row.typeName,property.storageId);
+                    row.isSupport=isSupport(row.typeName,main);
                 });
-                isSupports(property.storageId);
+                isSupports(main);
                 wrapper.appendChild(render());
                 property.changeFile();
             }

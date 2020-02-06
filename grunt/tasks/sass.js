@@ -19,9 +19,7 @@ module.exports = {
     sass: {
         PdfCreateFromFile:{
             options: {
-                style: 'compressed',
-                sourcemap: 'none',
-                noCache:true
+                style: 'compressed'
             },
             files: {
                 'dist/css/PdfCreateFromFile.min.css': 'src/sass/PdfCreateFromFile.scss'

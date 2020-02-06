@@ -1,10 +1,10 @@
 (function (root, factory) {
     if (typeof define === "function" && define.amd) {
         // the AMD loader.
-        define(['pdfMake',"jszip"], factory);
+        define(['pdfMake',"JSZip"], factory);
     } else if (typeof module === "object" && module.exports) {
         // the CommonJS loader.
-        module.exports = factory(require('pdfMake'),require('jszip'));
+        module.exports = factory(require('pdfMake'),require('JSZip'));
     } else {
         if (!root.pdfMake) {
             throw 'not fount module pdfMake https://github.com/bpampuch/pdfmake'
@@ -28,6 +28,7 @@
      * @param property.locales {object}
      * @param property.typeOpen {string} [download,open,print,getBase64,getBlob,getDataUrl]
      * @param property.documentName {string}
+     * @param property.urlPdfMerge {string} URL on app to merge pdf
      * @param property.callback {function}
      */
     var PdfCreateFromFile = function (property) {
@@ -37,28 +38,41 @@
                     params['locales'][locale]=locales;
                 }
             }
+            this._options={
+                wrapper:property.wrapper || document.body,
+                locale:property.locale || 'en',
+                maxCountFile:property.maxCountFile || 0,
+                listTypeFile:property.listTypeFile || [],
+                typeOpen:property.typeOpen || 'download',
+                documentName:property.documentName || 'Document',
+                callback:property.callback,
+                locales:property.locales||false,
+                urlPdfMerge:property.urlPdfMerge||false,
+                storageId:property.storageId || (+new Date())
 
-            this._wrapper = property.wrapper || document.body;
-            this._locale = property.locale || 'en';
-            this._maxCountFile = property.maxCountFile || 0;
-            this._listTypeFile = property.listTypeFile || [];
-            this._typeOpen = property.typeOpen || 'download';
-            this._documentName = property.documentName || 'Document';
-            this._callback = property.callback;
-            this._locales = property.locales||false;
-            this._storageId = property.storageId || (+new Date());
+            };
+            //this._wrapper = property.wrapper || document.body;
+            //this._locale = property.locale || 'en';
+            //this._maxCountFile = property.maxCountFile || 0;
+            //this._listTypeFile = property.listTypeFile || [];
+            //this._typeOpen = property.typeOpen || 'download';
+            //this._documentName = property.documentName || 'Document';
+            //this._callback = property.callback;
+            //this._locales = property.locales||false;
+            //this._storageId = property.storageId || (+new Date());
+            //_urlPdfMerge=property.urlPdfMerge||false;
             if (property.locales) {
                 for (var key in property.locales) {
                     params['locales'][key] = property.locales[key];
                 }
             }
-            if (!_files[this._storageId]) {
-                _files[this._storageId] = [];
+            if (!_files[this.getOption("storageId")]) {
+                _files[this.getOption("storageId")] = [];
             }
-            if (_supportTypeOpen.indexOf(this._typeOpen) < 0) {
-                throw 'Not fount typeOpen [' + this._typeOpen + ']'
+            if (_supportTypeOpen.indexOf(this.getOption("typeOpen")) < 0) {
+                throw 'Not fount typeOpen [' + this.getOption("typeOpen") + ']'
             }
-            if (_supportTypeOpenCallback.indexOf(this._typeOpen) > -1 && 'function' !== typeof this._callback) {
+            if (_supportTypeOpenCallback.indexOf(this.getOption("typeOpen")) > -1 && 'function' !== typeof this.getOption("callback")) {
                 throw 'Set function callback in param callback'
             }
         },

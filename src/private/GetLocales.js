@@ -11,9 +11,9 @@ var getLocale=function(locale){
         }
         //locales = params['localesDefault'];
     }
-    if(this._locales){
-        for(var key in this._locales){
-            locales[key]=this._locales[key];
+    if(this.getOption("locales")){
+        for(var key in this.getOption("locales")){
+            locales[key]=this.getOption("locales")[key];
         }
     }
     return locales;

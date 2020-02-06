@@ -1,11 +1,11 @@
 PdfCreateFromFile.prototype.addFile=function(file,property){
     var typeName, reader = new FileReader(),
         _this=this,
-        locales=getLocale.call(this,this._locale),
+        locales=getLocale.call(this,this.getOption("locale")),
         _typeFile=file.name.split('.').pop();
-    if(this._listTypeFile.length>0){
+    if(this.getOption("listTypeFile").length>0){
         var _isFileSupports=false;
-        this._listTypeFile.forEach(function(row){
+        this.getOption("listTypeFile").forEach(function(row){
             if(_typeFile.toUpperCase()===row.toUpperCase()) {
                 _isFileSupports=true;
 
@@ -45,7 +45,7 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
                         }
 
                         zFile.async(async).then(function (fileData) {
-                            _files[_this._storageId].push({
+                            _files[_this.getOption("storageId")].push({
                                 lastModified: +zFile.date,
                                 name: zFile.name,
                                 size: 0,
@@ -54,7 +54,7 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
                                 typeName: typeNameZip,
                                 content: prefix+fileData
                             });
-                            isSupports(_this._storageId);
+                            isSupports(_this);
                             property.success();
                         })
                     }(zFile.name.split('.').pop(),zFile));
@@ -78,7 +78,7 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
                 return ( size / Math.pow(1024, i) ).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
             };
 
-            _files[_this._storageId].push({
+            _files[_this.getOption("storageId")].push({
                 lastModified: file.lastModified,
                 name: file.name,
                 size: file.size,
@@ -87,7 +87,7 @@ PdfCreateFromFile.prototype.addFile=function(file,property){
                 typeName: typeName,
                 content: e.target.result
             });
-            isSupports(_this._storageId);
+            isSupports(_this);
             property.success();
         };
         if(_supportTypeText.indexOf(typeName.toUpperCase())>-1 ||_supportTypeHtml.indexOf(typeName.toUpperCase())>-1){

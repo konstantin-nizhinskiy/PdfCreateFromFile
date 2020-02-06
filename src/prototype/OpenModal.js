@@ -1,5 +1,5 @@
 PdfCreateFromFile.prototype.openModal=function(typeOpen,callback){
-    typeOpen=typeOpen||this._typeOpen;
+    typeOpen=typeOpen||this.getOption("typeOpen");
     if(_supportTypeOpen.indexOf(typeOpen)<0){
         throw 'Not fount typeOpen ['+typeOpen+']'
     }
@@ -7,7 +7,7 @@ PdfCreateFromFile.prototype.openModal=function(typeOpen,callback){
         throw 'Set function callback in param callback'
     }
 
-    this._wrapper.appendChild(this.view(typeOpen,callback))
+    this.getOption("wrapper").appendChild(this.view(typeOpen,callback))
 };
 
 
